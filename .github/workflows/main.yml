@@ -1,14 +1,14 @@
-name: 'Terraform develop'
+name: 'Terraform main'
 
 on:
   workflow_dispatch:
     branches:
-    - develop
+    - main
   pull_request:
 
 jobs:
   terraform:
-    name: 'Terraform-plan'
+    name: 'Terraform-deploy'
     runs-on: ubuntu-latest
     environment: dev
 
@@ -53,4 +53,13 @@ jobs:
         GKE_SA: ${{ secrets.GKE_SA }}
       run: |
         export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
-        terraform plan
+        terraform plan -out=tfplan.out
+
+    # Applies previously generated plan
+    - name: Terraform Plan
+      working-directory: infrastructure/env/dev
+      env:
+        GKE_SA: ${{ secrets.GKE_SA }}
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
+        terraform apply -auto-approve tfplan.out
