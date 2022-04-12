@@ -133,7 +133,7 @@ resource "helm_release" "istio-ingress" {
   namespace = "istio-ingress"
   timeout   = 1200
   lifecycle {
-    ignore_changes = [metadata,values]
+    ignore_changes = [metadata, values]
   }
 }
 
