@@ -1,0 +1,56 @@
+name: 'Terraform develop'
+
+on:
+  workflow_dispatch:
+    branches:
+    - develop
+  pull_request:
+
+jobs:
+  terraform:
+    name: 'Terraform-plan'
+    runs-on: ubuntu-latest
+    environment: dev
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      env:
+        GKE_SA: ${{ secrets.GKE_SA }}
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      working-directory: infrastructure/env/dev
+      env:
+        GKE_SA: ${{ secrets.GKE_SA }}
+      run: |
+        mkdir .gcp
+        echo "$GKE_SA" > .gcp/sa.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
+        terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: infrastructure/env/dev
+      env:
+        GKE_SA: ${{ secrets.GKE_SA }}
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
+        terraform fmt -check
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      working-directory: infrastructure/env/dev
+      env:
+        GKE_SA: ${{ secrets.GKE_SA }}
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
+        terraform plan
