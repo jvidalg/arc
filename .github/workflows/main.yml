@@ -1,9 +1,9 @@
 name: 'Terraform main'
 
 on:
-  workflow_dispatch:
+  push:
     branches:
-    - main
+      - main
 
 jobs:
   terraform:
