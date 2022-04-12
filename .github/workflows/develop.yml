@@ -47,7 +47,6 @@ jobs:
         GKE_SA: ${{ secrets.GKE_SA }}
       run: |
         export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
-        ls -la .gcp/
         terraform fmt -check
 
     # Generates an execution plan for Terraform
@@ -55,4 +54,6 @@ jobs:
       working-directory: infrastructure/env/dev
       env:
         GKE_SA: ${{ secrets.GKE_SA }}
-      run: terraform plan
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/.gcp/sa.json
+        terraform plan
