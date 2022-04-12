@@ -151,3 +151,20 @@ resource "helm_release" "kiali-operator" {
   namespace = var.namespaces[3]
   timeout   = 1200
 }
+
+## APP ##
+
+resource "kubernetes_namespace" "apps" {
+  depends_on = [
+    module.gke
+  ]
+  metadata {
+    annotations = {
+      component = "apps"
+    }
+    labels = {
+      istio-injection = "enabled"
+    }
+    name = "apps"
+  }
+}

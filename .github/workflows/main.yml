@@ -55,7 +55,7 @@ jobs:
         terraform plan -out=tfplan.out
 
     # Applies previously generated plan
-    - name: Terraform Plan
+    - name: Terraform Apply
       working-directory: infrastructure/env/dev
       env:
         GKE_SA: ${{ secrets.GKE_SA }}
