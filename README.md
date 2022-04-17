@@ -33,12 +33,25 @@ Argocd is used for applications deployments to the GKE cluster. For this demo, w
 
 ## Service Mesh
 
+- Secure cloud-native apps
+- Manage traffic effectively
+- Monitor service mesh
+- Simplify load balancing with advanced features
+- Enforce security
+- End to end encryption
+
 ![istio arch](./.media/service-mesh.png)
 
 For this demo, [Booking](https://istio.io/latest/docs/examples/bookinfo/), the istio example, is used:
 ![booking](./.media/Booking.png)
 
 ## Usage
+
+### Requirements
+
+- A GCP service account file that will be used as a GitHub Actions secret named `GKE_SA`, please ![follow these guide](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+- The GCP `project id` you will deploy to. Currently, the project has this value hardcoded at ![locals.tf](./infrastructure/env/dev/locals.tf). If you desire to have mo flexibility, you can create a `datasource` or use other method to provide the value such as a `TF_VAR`
+
 
 TODO some day
 
