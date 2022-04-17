@@ -21,11 +21,11 @@ Regional cluster
 
 ### Terraform
 
-
+![cicd](./.media/workflow.png)
 
 ### Applications
 
-
+Argocd is used for applications deployments to the GKE cluster. For this demo, we are using the raw kubernetes manifest files, but Argocd also supports other methods such as helm.
 
 #### GitOps
 
@@ -37,4 +37,8 @@ Regional cluster
 
 For this demo, [Booking](https://istio.io/latest/docs/examples/bookinfo/), the istio example, is used:
 ![booking](./.media/Booking.png)
+
+## Usage
+
+TODO some day
 
