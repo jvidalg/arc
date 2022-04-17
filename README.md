@@ -33,5 +33,8 @@ Regional cluster
 
 ## Service Mesh
 
+![istio arch](./.media/service-mesh.png)
+
 For this demo, [Booking](https://istio.io/latest/docs/examples/bookinfo/), the istio example, is used:
 ![booking](./.media/Booking.png)
+
