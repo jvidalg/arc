@@ -34,7 +34,7 @@ containerSecurityContext: ~
 
 service:
   # Type of service. Set to "None" to disable the service entirely
-  type: NodePort
+  type: LoadBalancer
   ports:
   - name: status-port
     port: 15021
