@@ -31,6 +31,16 @@ Argocd is used for applications deployments to the GKE cluster. For this demo, w
 
 ![argo](./.media/Argo.png)
 
+
+## Monitoring
+
+This project uses the `istio` default monitoring tools:
+
+- Prometheus, the open source monitoring system and time series database. You can use Prometheus with Istio to record metrics that track the health of Istio and of applications within the service mesh.
+
+- Grafana, the open source monitoring solution that can be used to configure dashboards for Istio. You can use Grafana to monitor the health of Istio and of applications within the service mesh.
+
+- Kiali, visualize different aspects of your Istio mesh, such as application wizards, detail views, health, istio configurations, multi-cluster deployments, etc.
 ## Service Mesh
 
 - Secure cloud-native apps
@@ -39,7 +49,7 @@ Argocd is used for applications deployments to the GKE cluster. For this demo, w
 - Facilitates multiple deployment strategies
 - Simplify load balancing with advanced features
 - Enforce security
-- End to end encryption
+- End to end encryption with mTLS
 
 ![istio arch](./.media/service-mesh.png)
 
@@ -50,8 +60,20 @@ For this demo, [Booking](https://istio.io/latest/docs/examples/bookinfo/), the i
 
 ### Requirements
 
-- A GCP service account file that will be used as a [GitHub Actions secret](https://docs.github.com/en/enterprise-server@3.4/actions/security-guides/encrypted-secrets) named `GKE_SA`, please [follow these guide](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+- A GCP Service Account file that will be used as a [GitHub Actions secret](https://docs.github.com/en/enterprise-server@3.4/actions/security-guides/encrypted-secrets) named `GKE_SA`, please [follow these guide](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 - The GCP `project id` you will deploy to. Currently, the project has this value hardcoded at [locals.tf](./infrastructure/env/dev/locals.tf). If you desire to have mo flexibility, you can create a `datasource` or use other method to provide the value such as a `TF_VAR`
+
+### Access monitoring and gitops tools from local
+
+#### Kiali
+`kubectl port-forward svc/kiali -n istio-system 5000:20001`
+
+#### Grafana
+`kubectl port-forward svc/grafana -n istio-system 5001:3000`
+
+#### ArgoCD
+`kubectl port-forward svc/argocd-server -n argocd 5002:443`
+
 
 
 TODO some day
