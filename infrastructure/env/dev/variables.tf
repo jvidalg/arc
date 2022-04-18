@@ -42,3 +42,7 @@ variable "istio_ingress_tpl_values" {
 variable "kiali_operator_tpl_values" {
   default = {}
 }
+
+variable "cert_manager_tpl_values" {
+  default = {}
+}

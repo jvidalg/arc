@@ -70,9 +70,13 @@ For this demo, [Booking](https://istio.io/latest/docs/examples/bookinfo/), the i
 
 #### Grafana
 `kubectl port-forward svc/grafana -n istio-system 5001:3000`
+Get token:
+`kubectl get secret -n istio-system $(kubectl get sa kiali-service-account -n istio-system -o "jsonpath={.secrets[0].name}") -o jsonpath={.data.token} | base64 -d`
 
 #### ArgoCD
 `kubectl port-forward svc/argocd-server -n argocd 5002:443`
+Get password:
+`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
 
 
 

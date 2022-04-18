@@ -31,6 +31,12 @@ locals {
       "values" : merge(var.kiali_operator_tpl_values)
     }
   )
+  cert_manager_values_file = templatefile(
+    "${path.module}/templates/cert-manager.yaml.tpl",
+    {
+      "values" : merge(var.cert_manager_tpl_values)
+    }
+  )
 }
 
 provider "kubernetes" {
@@ -149,6 +155,21 @@ resource "helm_release" "kiali-operator" {
     local.kiali_values_file
   ]
   namespace = var.namespaces[3]
+  timeout   = 1200
+}
+
+resource "helm_release" "cert-manager" {
+  depends_on = [
+    kubernetes_namespace.namespace, resource.kubernetes_namespace.istio-ingress
+  ]
+  name       = "jetstack"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  version    = "1.7.1"
+  values = [
+    local.cert_manager_values_file
+  ]
+  namespace = "kube-system"
   timeout   = 1200
 }
 
