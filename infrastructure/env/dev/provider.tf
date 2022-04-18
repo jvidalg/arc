@@ -17,6 +17,9 @@ terraform {
     htpasswd = {
       source = "loafoe/htpasswd"
     }
+    argocd = {
+      source = "oboukili/argocd"
+    }
 
   }
 
