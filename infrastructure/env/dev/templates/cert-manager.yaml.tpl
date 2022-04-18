@@ -543,4 +543,3 @@ startupapicheck:
 
     # Optional additional labels to add to the startupapicheck's ServiceAccount
     # labels: {}
-
